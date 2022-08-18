@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
 
 
 import pandas as pd
@@ -9,45 +8,23 @@ import plotly.express as px
 from dash import Dash, dcc, html, Input, Output
 
 
-# In[ ]:
-
-
 cm = pd.read_csv('expanded_country_matrix.csv')
 
-
-# In[ ]:
-
-
 commodity = pd.read_excel('commodity.xlsx')
-
-
-# In[ ]:
 
 
 cm2 = pd.merge(cm, commodity, how='left', on = 'commodity')
 df = cm2.iloc[:, 1:]
 
 
-# In[ ]:
-
 
 df['formatted_date'] = df.year * 1000 + df.week_of_the_year * 10 + 0
 df['date'] = pd.to_datetime(df['formatted_date'], format='%Y%W%w')
 
 
-# In[ ]:
-
-
 app = Dash(__name__)
 
-
-# In[ ]:
-
-
 server = app.server
-
-
-# In[ ]:
 
 
 app.layout = html.Div(
@@ -79,11 +56,6 @@ app.layout = html.Div(
       
              
     
-
-
-# In[ ]:
-
-
 @app.callback(
     Output('myGraph', 'figure'),
     Input('category', 'value'),
@@ -116,10 +88,6 @@ def update_graph(cat, country, disease):
     return fig
 
 
-# In[ ]:
-
-
-if __name__ == '__main__':
     app.run_server(debug = True)
 
 
